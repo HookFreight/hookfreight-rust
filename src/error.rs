@@ -31,7 +31,7 @@ impl ApiError {
 }
 
 #[derive(Debug, Error)]
-pub enum HookFreightError {
+pub enum HookfreightError {
     #[error("{0}")]
     Validation(ApiError),
     #[error("{0}")]

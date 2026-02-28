@@ -2,9 +2,9 @@
 name = "hookfreight"
 version = "0.1.0"
 edition = "2021"
-description = "Official Rust SDK for HookFreight"
+description = "Official Rust SDK for Hookfreight"
 license = "Apache-2.0"
-repository = "https://github.com/HookFreight/hookfreight-rust"
+repository = "https://github.com/Hookfreight/hookfreight-rust"
 homepage = "https://hookfreight.com"
 
 [dependencies]

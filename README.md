@@ -1,6 +1,6 @@
 # hookfreight-rust
 
-Official Rust SDK for [HookFreight](https://hookfreight.com).
+Official Rust SDK for [Hookfreight](https://hookfreight.com).
 
 ## Installation
 
@@ -13,14 +13,14 @@ cargo add hookfreight
 ```rust
 use std::collections::HashMap;
 
-use hookfreight::{HookFreight, HookFreightConfig};
+use hookfreight::{Hookfreight, HookfreightConfig};
 use serde_json::json;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let client = HookFreight::new(HookFreightConfig {
+    let client = Hookfreight::new(HookfreightConfig {
         api_key: Some("hf_sk_...".to_string()),
-        ..HookFreightConfig::default()
+        ..HookfreightConfig::default()
     })?;
 
     let mut params = HashMap::new();

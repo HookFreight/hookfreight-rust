@@ -3,8 +3,8 @@ use std::collections::HashMap;
 use reqwest::{header, Method};
 use serde_json::Value;
 
-use crate::config::HookFreightConfig;
-use crate::error::{ApiError, HookFreightError};
+use crate::config::HookfreightConfig;
+use crate::error::{ApiError, HookfreightError};
 
 const SDK_VERSION: &str = "0.1.0";
 
@@ -16,11 +16,11 @@ pub struct HFHttpClient {
 }
 
 impl HFHttpClient {
-    pub fn new(config: HookFreightConfig) -> Result<Self, HookFreightError> {
+    pub fn new(config: HookfreightConfig) -> Result<Self, HookfreightError> {
         let client = reqwest::Client::builder()
             .timeout(config.timeout)
             .build()
-            .map_err(|e| HookFreightError::Connection(e.to_string()))?;
+            .map_err(|e| HookfreightError::Connection(e.to_string()))?;
 
         Ok(Self {
             client,
@@ -33,19 +33,19 @@ impl HFHttpClient {
         &self,
         path: &str,
         query: Option<&HashMap<String, String>>,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         self.request(Method::GET, path, query, None).await
     }
 
-    pub async fn post(&self, path: &str, body: Option<&Value>) -> Result<Value, HookFreightError> {
+    pub async fn post(&self, path: &str, body: Option<&Value>) -> Result<Value, HookfreightError> {
         self.request(Method::POST, path, None, body).await
     }
 
-    pub async fn put(&self, path: &str, body: Option<&Value>) -> Result<Value, HookFreightError> {
+    pub async fn put(&self, path: &str, body: Option<&Value>) -> Result<Value, HookfreightError> {
         self.request(Method::PUT, path, None, body).await
     }
 
-    pub async fn delete(&self, path: &str) -> Result<Value, HookFreightError> {
+    pub async fn delete(&self, path: &str) -> Result<Value, HookfreightError> {
         self.request(Method::DELETE, path, None, None).await
     }
 
@@ -55,7 +55,7 @@ impl HFHttpClient {
         path: &str,
         query: Option<&HashMap<String, String>>,
         body: Option<&Value>,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         let normalized = format!("/{path}").replace("//", "/");
         let url = format!("{}{}", self.base_url, normalized);
 
@@ -82,7 +82,7 @@ impl HFHttpClient {
         let response = request
             .send()
             .await
-            .map_err(|e| HookFreightError::Connection(e.to_string()))?;
+            .map_err(|e| HookfreightError::Connection(e.to_string()))?;
 
         let status = response.status().as_u16();
         let content_type = response
@@ -95,7 +95,7 @@ impl HFHttpClient {
         let text = response
             .text()
             .await
-            .map_err(|e| HookFreightError::Connection(e.to_string()))?;
+            .map_err(|e| HookfreightError::Connection(e.to_string()))?;
 
         let body_value = decode_body(&text, &content_type);
 
@@ -119,14 +119,14 @@ fn decode_body(raw: &str, content_type: &str) -> Value {
     }
 }
 
-fn map_error(status: u16, body: Value) -> HookFreightError {
+fn map_error(status: u16, body: Value) -> HookfreightError {
     let api_error = ApiError::new(status, body);
 
     match status {
-        400 => HookFreightError::Validation(api_error),
-        401 => HookFreightError::Authentication(api_error),
-        403 => HookFreightError::Permission(api_error),
-        404 => HookFreightError::NotFound(api_error),
-        _ => HookFreightError::Api(api_error),
+        400 => HookfreightError::Validation(api_error),
+        401 => HookfreightError::Authentication(api_error),
+        403 => HookfreightError::Permission(api_error),
+        404 => HookfreightError::NotFound(api_error),
+        _ => HookfreightError::Api(api_error),
     }
 }

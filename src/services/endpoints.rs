@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use serde_json::Value;
 
-use crate::error::HookFreightError;
+use crate::error::HookfreightError;
 use crate::http_client::HFHttpClient;
 use crate::pagination::{clamp, MAX_ENDPOINTS_LIMIT};
 
@@ -20,7 +20,7 @@ impl EndpointsService {
         &self,
         app_id: &str,
         params: Option<&HashMap<String, Value>>,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         let query = clamp(params, MAX_ENDPOINTS_LIMIT);
         self.http
             .get(&format!("/apps/{app_id}/endpoints"), query.as_ref())
@@ -28,14 +28,14 @@ impl EndpointsService {
             .map(unwrap_data)
     }
 
-    pub async fn create(&self, params: &Value) -> Result<Value, HookFreightError> {
+    pub async fn create(&self, params: &Value) -> Result<Value, HookfreightError> {
         self.http
             .post("/endpoints", Some(params))
             .await
             .map(unwrap_data)
     }
 
-    pub async fn get(&self, endpoint_id: &str) -> Result<Value, HookFreightError> {
+    pub async fn get(&self, endpoint_id: &str) -> Result<Value, HookfreightError> {
         self.http
             .get(&format!("/endpoints/{endpoint_id}"), None)
             .await
@@ -46,14 +46,14 @@ impl EndpointsService {
         &self,
         endpoint_id: &str,
         params: &Value,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         self.http
             .put(&format!("/endpoints/{endpoint_id}"), Some(params))
             .await
             .map(unwrap_data)
     }
 
-    pub async fn delete(&self, endpoint_id: &str) -> Result<Value, HookFreightError> {
+    pub async fn delete(&self, endpoint_id: &str) -> Result<Value, HookfreightError> {
         self.http
             .delete(&format!("/endpoints/{endpoint_id}"))
             .await

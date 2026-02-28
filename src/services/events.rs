@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use serde_json::Value;
 
-use crate::error::HookFreightError;
+use crate::error::HookfreightError;
 use crate::http_client::HFHttpClient;
 use crate::pagination::{clamp, MAX_EVENTS_LIMIT};
 
@@ -19,7 +19,7 @@ impl EventsService {
     pub async fn list(
         &self,
         params: Option<&HashMap<String, Value>>,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         let query = clamp(params, MAX_EVENTS_LIMIT);
         self.http
             .get("/events", query.as_ref())
@@ -27,7 +27,7 @@ impl EventsService {
             .map(unwrap_data)
     }
 
-    pub async fn get(&self, event_id: &str) -> Result<Value, HookFreightError> {
+    pub async fn get(&self, event_id: &str) -> Result<Value, HookfreightError> {
         self.http
             .get(&format!("/events/{event_id}"), None)
             .await
@@ -38,7 +38,7 @@ impl EventsService {
         &self,
         endpoint_id: &str,
         params: Option<&HashMap<String, Value>>,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         let query = clamp(params, MAX_EVENTS_LIMIT);
         self.http
             .get(&format!("/endpoints/{endpoint_id}/events"), query.as_ref())
@@ -46,7 +46,7 @@ impl EventsService {
             .map(unwrap_data)
     }
 
-    pub async fn replay(&self, event_id: &str) -> Result<(), HookFreightError> {
+    pub async fn replay(&self, event_id: &str) -> Result<(), HookfreightError> {
         self.http
             .post(&format!("/events/{event_id}/replay"), None)
             .await

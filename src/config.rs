@@ -1,13 +1,13 @@
 use std::time::Duration;
 
 #[derive(Clone, Debug)]
-pub struct HookFreightConfig {
+pub struct HookfreightConfig {
     pub api_key: Option<String>,
     pub base_url: String,
     pub timeout: Duration,
 }
 
-impl Default for HookFreightConfig {
+impl Default for HookfreightConfig {
     fn default() -> Self {
         Self {
             api_key: None,

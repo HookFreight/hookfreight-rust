@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use serde_json::Value;
 
-use crate::error::HookFreightError;
+use crate::error::HookfreightError;
 use crate::http_client::HFHttpClient;
 use crate::pagination::{clamp, MAX_DELIVERIES_LIMIT};
 
@@ -19,7 +19,7 @@ impl DeliveriesService {
     pub async fn list(
         &self,
         params: Option<&HashMap<String, Value>>,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         let query = clamp(params, MAX_DELIVERIES_LIMIT);
         self.http
             .get("/deliveries", query.as_ref())
@@ -31,7 +31,7 @@ impl DeliveriesService {
         &self,
         event_id: &str,
         params: Option<&HashMap<String, Value>>,
-    ) -> Result<Value, HookFreightError> {
+    ) -> Result<Value, HookfreightError> {
         let query = clamp(params, MAX_DELIVERIES_LIMIT);
         self.http
             .get(&format!("/events/{event_id}/deliveries"), query.as_ref())
@@ -39,14 +39,14 @@ impl DeliveriesService {
             .map(unwrap_data)
     }
 
-    pub async fn retry(&self, delivery_id: &str) -> Result<(), HookFreightError> {
+    pub async fn retry(&self, delivery_id: &str) -> Result<(), HookfreightError> {
         self.http
             .post(&format!("/deliveries/{delivery_id}/retry"), None)
             .await
             .map(|_| ())
     }
 
-    pub async fn queue_stats(&self) -> Result<Value, HookFreightError> {
+    pub async fn queue_stats(&self) -> Result<Value, HookfreightError> {
         self.http
             .get("/deliveries/queue/stats", None)
             .await

@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 
-use hookfreight::{HookFreight, HookFreightConfig};
+use hookfreight::{Hookfreight, HookfreightConfig};
 use serde_json::{json, Value};
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let client = HookFreight::new(HookFreightConfig {
+    let client = Hookfreight::new(HookfreightConfig {
         api_key: std::env::var("HOOKFREIGHT_API_KEY").ok(),
-        ..HookFreightConfig::default()
+        ..HookfreightConfig::default()
     })?;
 
     let mut params: HashMap<String, Value> = HashMap::new();

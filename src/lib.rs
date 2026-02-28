@@ -4,8 +4,8 @@ mod http_client;
 mod pagination;
 mod services;
 
-pub use config::HookFreightConfig;
-pub use error::{ApiError, HookFreightError};
+pub use config::HookfreightConfig;
+pub use error::{ApiError, HookfreightError};
 pub use services::{
     apps::AppsService, deliveries::DeliveriesService, endpoints::EndpointsService,
     events::EventsService,
@@ -14,15 +14,15 @@ pub use services::{
 use http_client::HFHttpClient;
 
 #[derive(Clone)]
-pub struct HookFreight {
+pub struct Hookfreight {
     pub apps: AppsService,
     pub endpoints: EndpointsService,
     pub events: EventsService,
     pub deliveries: DeliveriesService,
 }
 
-impl HookFreight {
-    pub fn new(config: HookFreightConfig) -> Result<Self, HookFreightError> {
+impl Hookfreight {
+    pub fn new(config: HookfreightConfig) -> Result<Self, HookfreightError> {
         let http = HFHttpClient::new(config)?;
 
         Ok(Self {
